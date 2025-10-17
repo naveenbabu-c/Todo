@@ -57,4 +57,24 @@ public class TodoService {
         return listTodo;
     }
 
+    public Todo getTodo(String authHeader, int id) {
+        String email = jwtUtils.extractEmailFromHeader(authHeader);
+        User user = null;
+        try {
+            user = userRepository.findByEmail(email).get();
+        } catch (Exception e) {
+            return null;
+        }
+        Todo todo = null;
+        try {
+            todo = todoRepository.findByUser( user).get(id);
+        } catch (Exception e) {
+            return null;
+        }
+        return todo;
+
+
+
+    }
+
 }
