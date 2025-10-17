@@ -4,6 +4,7 @@ package com.firstSpring.First.Spring.Controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -38,8 +39,13 @@ public class TodoController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<?> getTodos(@RequestHeader("Authorization")String authHeader) {
+    public ResponseEntity<?> getAllTodos(@RequestHeader("Authorization")String authHeader) {
         return new ResponseEntity<>(todoService.getTodosByUserEmail(authHeader), HttpStatus.OK);
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<?> getTodo(@RequestHeader("Authorization")String authHeader,@PathVariable int id) {
+        return new ResponseEntity<>(todoService.getTodo(authHeader,id), HttpStatus.OK);
     }
     
 
