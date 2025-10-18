@@ -31,7 +31,7 @@ public class User {
     String email;
 
     @NotBlank(message = "Enter Password")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,24}$", message = "Password must be at least 8 characters, include uppercase,lowercase, number, and special character")
+    // @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,24}$", message = "Password must be at least 8 characters, include uppercase,lowercase, number, and special character")
     String password;
 
 }

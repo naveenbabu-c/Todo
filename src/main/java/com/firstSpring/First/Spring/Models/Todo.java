@@ -22,7 +22,8 @@ public class Todo {
     @NotBlank(message = "Todo cannot be empty")
     String todo;
 
-    @Pattern(regexp = "^(open|inprogress|completed)$", message = "Invalid Status")
+    
+    @Pattern(regexp = "open|inprogress|completed", message = "Invalid Status")
     String status = "open";
 
     @ManyToOne
