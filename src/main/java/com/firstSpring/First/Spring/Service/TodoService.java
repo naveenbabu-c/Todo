@@ -78,4 +78,10 @@ public class TodoService {
         return "Todo status updated successfully";
     }
 
+    public String deleteTodo(String authHeader, int id) {
+        Todo todo = getTodo(authHeader, id);
+        todoRepository.delete(todo);
+        return "Todo deleted successfully";
+    }
+
 }
