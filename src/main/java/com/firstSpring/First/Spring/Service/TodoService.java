@@ -58,23 +58,30 @@ public class TodoService {
     }
 
     public Todo getTodo(String authHeader, int id) {
-        String email = jwtUtils.extractEmailFromHeader(authHeader);
-        User user = null;
-        try {
-            user = userRepository.findByEmail(email).get();
-        } catch (Exception e) {
-            return null;
-        }
+        List<Todo> listTodo = getTodosByUserEmail(authHeader);
         Todo todo = null;
         try {
-            todo = todoRepository.findByUser( user).get(id);
+            todo = listTodo.get(id);
         } catch (Exception e) {
             return null;
         }
         return todo;
+    }
 
+    public String changeStatus(String authHeader,int id, String entity) {
+        if(!entity.equals("open") && !entity.equals("inprogress") && !entity.equals("completed")){
+            return "Invalid Status";
+        }
+       Todo todo = getTodo(authHeader, id);
+        todo.setStatus(entity);
+        todoRepository.save(todo);
+        return "Todo status updated successfully";
+    }
 
-
+    public String deleteTodo(String authHeader, int id) {
+        Todo todo = getTodo(authHeader, id);
+        todoRepository.delete(todo);
+        return "Todo deleted successfully";
     }
 
 }

@@ -3,6 +3,7 @@ package com.firstSpring.First.Spring.Controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,8 @@ import com.firstSpring.First.Spring.Models.Todo;
 import com.firstSpring.First.Spring.Service.TodoService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -47,6 +50,17 @@ public class TodoController {
     public ResponseEntity<?> getTodo(@RequestHeader("Authorization")String authHeader,@PathVariable int id) {
         return new ResponseEntity<>(todoService.getTodo(authHeader,id), HttpStatus.OK);
     }
-    
 
+    @PutMapping("/get/{id}/update")
+    public ResponseEntity<?> changeStatus(@RequestHeader("Authorization")String authHeader,@PathVariable int id, @RequestBody String entity) {
+        
+        return new ResponseEntity<>(todoService.changeStatus(authHeader,id,entity), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/get/{id}/delete")
+    public ResponseEntity<?> deleteTodo(@RequestHeader("Authorization")String authHeader,@PathVariable int id) {
+        
+        return new ResponseEntity<>(todoService.deleteTodo(authHeader,id), HttpStatus.OK);
+    }
+    
 }
