@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,6 @@ import com.firstSpring.First.Spring.Models.Todo;
 import com.firstSpring.First.Spring.Service.TodoService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PutMapping;
 
 
 
@@ -33,7 +33,7 @@ public class TodoController {
     @PostMapping("/create")
     public ResponseEntity<?> createTodo(@RequestHeader("Authorization")String authHeader, @RequestBody Todo newTodo){
 
-        String response = todoService.createTodo(authHeader,newTodo.getTodo());
+        String response = todoService.createTodo(authHeader,newTodo.getTodo(),newTodo.getTodo_date());
         if(response.equals("Todo created successfully")){
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         }   
@@ -61,6 +61,12 @@ public class TodoController {
     public ResponseEntity<?> deleteTodo(@RequestHeader("Authorization")String authHeader,@PathVariable int id) {
         
         return new ResponseEntity<>(todoService.deleteTodo(authHeader,id), HttpStatus.OK);
+    }
+
+    @PutMapping("/get/{id}/edit")
+    public ResponseEntity<?> editTodo(@RequestHeader("Authorization")String authHeader,@PathVariable int id, @RequestBody Todo body) {
+        
+        return new ResponseEntity<>(todoService.editTodo(authHeader, id, body.getTodo(),body.getTodo_date()));
     }
     
 }
