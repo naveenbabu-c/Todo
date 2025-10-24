@@ -1,5 +1,9 @@
 package com.firstSpring.First.Spring.Models;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
@@ -23,9 +27,16 @@ public class Todo {
 
     String status = "open";
 
+    @DateTimeFormat(pattern = "dd-mm-yyyy")
+    Date created_date;
+
+    @DateTimeFormat(pattern = "dd-mm-yyyy")
+    String todo_date;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonIgnoreProperties({ "password" })
+    @JsonIgnoreProperties({"password"})
     private User user;
 
+    
 }

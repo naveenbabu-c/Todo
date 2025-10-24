@@ -1,15 +1,17 @@
 package com.firstSpring.First.Spring.Service;
 
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.firstSpring.First.Spring.Configuration.JwtUtils;
 import com.firstSpring.First.Spring.Models.Todo;
 import com.firstSpring.First.Spring.Models.User;
 import com.firstSpring.First.Spring.Repository.TodoRepository;
 import com.firstSpring.First.Spring.Repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class TodoService {
     String emptyMessage = "Can not create empty Todo";
     String invalidUser = "User not found";
 
-    public String createTodo(String authHeader, String todoDescription) {
+    public String createTodo(String authHeader, String todoDescription, String date) {
         String email = jwtUtils.extractEmailFromHeader(authHeader);
         User user = null;
         try {
@@ -41,6 +43,8 @@ public class TodoService {
         Todo todo = new Todo();
         todo.setUser(user);
         todo.setTodo(todoDescription);
+        todo.setCreated_date(new Date(System.currentTimeMillis()));
+        todo.setTodo_date(date);
         todoRepository.save(todo);
         return created;
     }
@@ -82,6 +86,13 @@ public class TodoService {
         Todo todo = getTodo(authHeader, id);
         todoRepository.delete(todo);
         return "Todo deleted successfully";
+    }
+
+    public String editTodo(String authHeader,int id, String todoDescription, String date){
+         Todo todo = getTodo(authHeader, id);
+         todo.setTodo_date(date);
+         todo.setTodo(todoDescription);
+        return "Todo edited successfully";
     }
 
 }
