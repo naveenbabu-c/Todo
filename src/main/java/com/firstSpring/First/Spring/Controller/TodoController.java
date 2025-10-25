@@ -66,7 +66,7 @@ public class TodoController {
     @PutMapping("/get/{id}/edit")
     public ResponseEntity<?> editTodo(@RequestHeader("Authorization")String authHeader,@PathVariable int id, @RequestBody Todo body) {
         
-        return new ResponseEntity<>(todoService.editTodo(authHeader, id, body.getTodo(),body.getTodo_date()));
+        return new ResponseEntity<>(todoService.editTodo(authHeader, id, body.getTodo(),body.getTodo_date()),HttpStatus.OK);
     }
     
 }

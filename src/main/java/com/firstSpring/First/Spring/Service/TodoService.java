@@ -92,6 +92,7 @@ public class TodoService {
          Todo todo = getTodo(authHeader, id);
          todo.setTodo_date(date);
          todo.setTodo(todoDescription);
+         todoRepository.save(todo);
         return "Todo edited successfully";
     }
 
